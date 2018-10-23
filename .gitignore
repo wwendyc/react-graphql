@@ -26,3 +26,7 @@ build
 .vscode
 config/local*.json
 config/local*.js
+
+.next/
+layout.md
+variables.env
