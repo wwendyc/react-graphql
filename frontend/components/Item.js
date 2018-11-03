@@ -39,7 +39,7 @@ export default class Item extends Component {
             <a>Edit ✏️</a>
           </Link>
           <button>Add to cart</button>
-          <button>Delete</button>
+          <button>Delete </button>
         </div>
       </ItemStyles>
     )
