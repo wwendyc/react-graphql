@@ -32,7 +32,8 @@ class CreateItem extends Component {
     description: '',
     image: '',
     largeImage: '',
-    price: 0
+    price: 0,
+    uploadingFile: false
   }
 
   handleChange = e => {
@@ -43,6 +44,7 @@ class CreateItem extends Component {
 
   uploadFile = async e => {
     console.log('uploading file...')
+    this.setState({ uploadingFile: true })
     const files = e.target.files
     const data = new FormData()
     data.append('file', files[0])
@@ -59,11 +61,21 @@ class CreateItem extends Component {
     console.log(file)
     this.setState({
       image: file.secure_url,
-      largeImage: file.eager[0].secure_url
+      largeImage: file.eager[0].secure_url,
+      uploadingFile: false
     })
   }
 
   render() {
+    const {
+      title,
+      description,
+      image,
+      largeImage,
+      price,
+      uploadingFile
+    } = this.state
+
     return (
       <Mutation mutation={CREATE_ITEM_MUTATION} variables={this.state}>
         {(createItem, { loading, error }) => (
@@ -92,9 +104,9 @@ class CreateItem extends Component {
                   onChange={this.uploadFile}
                   required
                 />
-                {this.state.image && (
+                {image && (
                   <img
-                    src={this.state.image}
+                    src={image}
                     width="200"
                     alt="upload preview"
                   />
@@ -108,7 +120,7 @@ class CreateItem extends Component {
                   type="text"
                   name="title"
                   placeholder="title"
-                  value={this.state.title}
+                  value={title}
                   onChange={this.handleChange}
                   required
                 />
@@ -121,7 +133,7 @@ class CreateItem extends Component {
                   type="number"
                   name="price"
                   placeholder="price"
-                  value={this.state.price}
+                  value={price}
                   onChange={this.handleChange}
                   required
                 />
@@ -133,12 +145,14 @@ class CreateItem extends Component {
                   id="description"
                   name="description"
                   placeholder="enter a description"
-                  value={this.state.description}
+                  value={description}
                   onChange={this.handleChange}
                   required
                 />
               </label>
-              <button type="submit">Submit</button>
+              <button type="submit" disabled={uploadingFile}>
+                Submit
+              </button>
             </fieldset>
           </Form>
         )}
