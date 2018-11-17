@@ -1,30 +1,10 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
 import Router from 'next/router'
 import Form from './styles/Form'
 import formatMoney from '../lib/formatMoney'
 import Error from './ErrorMessage'
-
-export const CREATE_ITEM_MUTATION = gql`
-  mutation CREATE_ITEM_MUTATION(
-    $title: String!
-    $description: String!
-    $price: Int!
-    $image: String!
-    $largeImage: String!
-  ) {
-    createItem(
-      title: $title
-      description: $description
-      price: $price
-      image: $image
-      largeImage: $largeImage
-    ) {
-      id
-    }
-  }
-`
+import { CREATE_ITEM_MUTATION } from './helpers/queries'
 
 class CreateItem extends Component {
   state = {
@@ -104,13 +84,7 @@ class CreateItem extends Component {
                   onChange={this.uploadFile}
                   required
                 />
-                {image && (
-                  <img
-                    src={image}
-                    width="200"
-                    alt="upload preview"
-                  />
-                )}
+                {image && <img src={image} width="200" alt="upload preview" />}
               </label>
 
               <label htmlFor="title">

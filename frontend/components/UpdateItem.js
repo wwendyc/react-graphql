@@ -1,48 +1,11 @@
 import React, { Component } from 'react'
 import { Mutation, Query } from 'react-apollo'
-import gql from 'graphql-tag'
 import Router from 'next/router'
+
+import { UPDATE_ITEM_MUTATION, SINGLE_ITEM_QUERY } from './helpers/queries'
 import Form from './styles/Form'
 import formatMoney from '../lib/formatMoney'
 import Error from './ErrorMessage'
-
-const SINGLE_ITEM_QUERY = gql`
-  query SINGLE_ITEM_QUERY($id: ID!) {
-    item(where: { id: $id }) {
-      id
-      title
-      description
-      price
-    }
-  }
-`
-
-export const UPDATE_ITEM_MUTATION = gql`
-  mutation UPDATE_ITEM_MUTATION(
-    $id: ID!
-    $title: String
-    $description: String
-    $price: Int
-    $image: String
-    $largeImage: String
-  ) {
-    updateItem(
-      id: $id
-      title: $title
-      description: $description
-      price: $price
-      image: $image
-      largeImage: $largeImage
-    ) {
-      id
-      title
-      description
-      price
-      image
-      largeImage
-    }
-  }
-`
 
 class UpdateItem extends Component {
   state = {}

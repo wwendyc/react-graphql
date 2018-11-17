@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
+import Head from 'next/head'
+
+import { SINGLE_ITEM_QUERY } from './helpers/queries'
 import Error from './ErrorMessage'
 import styled from 'styled-components'
-import Head from 'next/head'
 
 const SingleItemStyles = styled.div`
   max-width: 1200px;
@@ -21,17 +22,6 @@ const SingleItemStyles = styled.div`
   .details {
     margin: 3rem;
     font-size: 2rem;
-  }
-`
-
-const SINGLE_ITEM_QUERY = gql`
-  query SINGLE_ITEM_QUERY($id: ID!) {
-    item(where: { id: $id }) {
-      id
-      title
-      description
-      largeImage
-    }
   }
 `
 
