@@ -1,32 +1,40 @@
 import Link from 'next/link'
 
 import User from './User'
+import Signout from './Signout'
 import NavStyles from './styles/NavStyles'
 
 const Nav = () => (
-  <NavStyles>
-    <User>
-      {({ data: { currentUser } }) => {
-        if (currentUser) return <p>{currentUser.name}</p>
-        return null
-      }}
-    </User>
-    <Link href="/items">
-      <a>Shop</a>
-    </Link>
-    <Link href="/sell">
-      <a>Sell</a>
-    </Link>
-    <Link href="/signup">
-      <a>Signup</a>
-    </Link>
-    <Link href="/orders">
-      <a>Orders</a>
-    </Link>
-    <Link href="/me">
-      <a>Account</a>
-    </Link>
-  </NavStyles>
+  <User>
+    {({ data: { currentUser } }) => (
+      <NavStyles>
+        <Link href="/items">
+          <a>Shop</a>
+        </Link>
+        {currentUser && (
+          <>
+            <Link href="/sell">
+              <a>Sell</a>
+            </Link>
+
+            <Link href="/orders">
+              <a>Orders</a>
+            </Link>
+            <Link href="/account">
+              <a>Account</a>
+            </Link>
+            <Signout />
+          </>
+        )}
+
+        {!currentUser && (
+          <Link href="/login">
+            <a>Log In</a>
+          </Link>
+        )}
+      </NavStyles>
+    )}
+  </User>
 )
 
 export default Nav

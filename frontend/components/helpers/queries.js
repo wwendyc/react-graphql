@@ -111,3 +111,24 @@ export const SIGNUP_MUTATION = gql`
     }
   }
 `
+
+export const SIGNIN_MUTATION = gql`
+  mutation SIGNIN_MUTATION(
+    $email: String!
+    $password: String!
+  ) {
+    signin(email: $email, password: $password) {
+      id
+      email
+      name
+    }
+  }
+`
+
+export const SIGNOUT_MUTATION = gql`
+  mutation SIGNOUT_MUTATION {
+    signout {
+      message
+    }
+  }
+`
