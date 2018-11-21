@@ -2,8 +2,8 @@ import gql from 'graphql-tag'
 import { perPage } from '../../config'
 
 /*
-* QUERIES
-*/
+ * QUERIES
+ */
 export const ALL_ITEMS_QUERY = gql`
   query ALL_ITEMS_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
     items(first: $first, skip: $skip, orderBy: createdAt_DESC ) {
@@ -41,8 +41,8 @@ export const CURRENT_USER_QUERY = gql`
 `
 
 /*
-* MUTATIONS
-*/
+ * MUTATIONS
+ */
 export const CREATE_ITEM_MUTATION = gql`
   mutation CREATE_ITEM_MUTATION(
     $title: String!
@@ -113,10 +113,7 @@ export const SIGNUP_MUTATION = gql`
 `
 
 export const SIGNIN_MUTATION = gql`
-  mutation SIGNIN_MUTATION(
-    $email: String!
-    $password: String!
-  ) {
+  mutation SIGNIN_MUTATION($email: String!, $password: String!) {
     signin(email: $email, password: $password) {
       id
       email
@@ -129,6 +126,32 @@ export const SIGNOUT_MUTATION = gql`
   mutation SIGNOUT_MUTATION {
     signout {
       message
+    }
+  }
+`
+
+export const REQUEST_PASSWORD_MUTATION = gql`
+  mutation REQUEST_PASSWORD_MUTATION($email: String!) {
+    reqPwdReset(email: $email) {
+      message
+    }
+  }
+`
+
+export const RESET_PASSWORD_MUTATION = gql`
+  mutation RESET_PASSWORD_MUTATION(
+    $resetToken: String!
+    $password: String!
+    $confirmPassword: String!
+  ) {
+    passwordReset(
+      resetToken: $resetToken
+      password: $password
+      confirmPassword: $confirmPassword
+    ) {
+      id
+      email
+      name
     }
   }
 `

@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
 
-import { SIGNIN_MUTATION, CURRENT_USER_QUERY } from './helpers/queries'
+import { REQUEST_PASSWORD_MUTATION } from './helpers/queries'
 import Form from './styles/Form'
 import Error from './ErrorMessage'
 
-class Signin extends Component {
+class RequestPassword extends Component {
   state = {
     email: '',
     password: ''
@@ -17,29 +17,23 @@ class Signin extends Component {
 
   render() {
     return (
-      <Mutation
-        mutation={SIGNIN_MUTATION}
-        variables={this.state}
-        refetchQueries={[
-          { query: CURRENT_USER_QUERY } // refetches query w/o refresh
-        ]}
-      >
-        {(signin, { error, loading }) => (
+      <Mutation mutation={REQUEST_PASSWORD_MUTATION} variables={this.state}>
+        {(reset, { error, loading, called }) => (
           <Form
             method="post"
             onSubmit={async e => {
               e.preventDefault()
-              await signin()
+              await reset()
 
               this.setState({
-                email: '',
-                password: ''
+                email: ''
               })
             }}
           >
             <fieldset disabled={loading} aria-busy={loading}>
-              <h2>Log in</h2>
+              <h2>Reset password</h2>
               <Error error={error} />
+              {!error && !loading && called && <p>Success! Check your email for a reset link.</p>}
               <label htmlFor="email">
                 Email
                 <input
@@ -50,17 +44,7 @@ class Signin extends Component {
                   onChange={this.saveToState}
                 />
               </label>
-              <label htmlFor="password">
-                Password
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="password"
-                  value={this.state.password}
-                  onChange={this.saveToState}
-                />
-              </label>
-              <button type="submit">Log In</button>
+              <button type="submit">Request reset</button>
             </fieldset>
           </Form>
         )}
@@ -69,4 +53,4 @@ class Signin extends Component {
   }
 }
 
-export default Signin
+export default RequestPassword

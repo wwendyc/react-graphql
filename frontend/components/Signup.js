@@ -40,16 +40,6 @@ class Signup extends Component {
             <fieldset disabled={loading} aria-busy={loading}>
               <h2>Sign up for an account!</h2>
               <Error error={error} />
-              <label htmlFor="email">
-                Email
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="email"
-                  value={this.state.email}
-                  onChange={this.saveToState}
-                />
-              </label>
               <label htmlFor="name">
                 Name
                 <input
@@ -57,6 +47,16 @@ class Signup extends Component {
                   name="name"
                   placeholder="name"
                   value={this.state.name}
+                  onChange={this.saveToState}
+                />
+              </label>
+              <label htmlFor="email">
+                Email
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="email"
+                  value={this.state.email}
                   onChange={this.saveToState}
                 />
               </label>
@@ -70,7 +70,7 @@ class Signup extends Component {
                   onChange={this.saveToState}
                 />
               </label>
-              <button type="submit">Sign Up!</button>
+              <button type="submit">Sign Up</button>
             </fieldset>
           </Form>
         )}

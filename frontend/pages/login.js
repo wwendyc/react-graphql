@@ -1,5 +1,6 @@
 import Signup from '../components/Signup'
 import Signin from '../components/Signin'
+import RequestPassword from '../components/RequestPassword'
 import styled from 'styled-components'
 
 const Columns = styled.div`
@@ -12,6 +13,7 @@ const LoginPage = props => (
   <Columns>
     <Signin />
     <Signup />
+    <RequestPassword />
   </Columns>
 )
 
