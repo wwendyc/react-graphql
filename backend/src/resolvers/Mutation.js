@@ -5,11 +5,19 @@ const { promisify } = require('util')
 
 const Mutations = {
   async createItem(parent, args, ctx, info) {
-    // TODO: Check if user is logged in
+    if (!ctx.request.userId) {
+      throw new Error('You must be logged in to do that!')
+    }
 
     const item = await ctx.db.mutation.createItem(
       {
         data: {
+          // Creates a relationship between the Item and the User
+          user: {
+            connect: {
+              id: ctx.request.userId
+            }
+          },
           ...args
         }
       },
