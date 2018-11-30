@@ -5,7 +5,6 @@ import Signin from './Signin'
 const SigninPrompt = props => (
   <Query query={CURRENT_USER_QUERY}>
     {({ data, loading }) => {
-      console.log('data ', data)
       if (loading) return <p>Loading...</p>
       if (!data.currentUser) {
         return (
