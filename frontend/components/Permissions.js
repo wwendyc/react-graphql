@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
+import propTypes from 'prop-types'
 
 import { ALL_USERS_QUERY } from './helpers/queries'
 import Table from './styles/Table'
@@ -35,7 +36,7 @@ const Permissions = props => (
             </thead>
             <tbody>
               {data.users.map(user => (
-                <User user={user} key={user.email} />
+                <UserPermissions user={user} key={user.email} />
               ))}
             </tbody>
           </Table>
@@ -45,7 +46,30 @@ const Permissions = props => (
   </Query>
 )
 
-class User extends Component {
+class UserPermissions extends Component {
+  static propType = {
+    user: propTypes.shape({
+      name: propTypes.string,
+      email: propTypes.string,
+      id: propTypes.string,
+      permissions: propTypes.array
+    }).isRequired
+  }
+  state = {
+    permissions: this.props.user.permissions
+  }
+  handleChange = e => {
+    const checkbox = e.target
+    // take a copy of the current permissions
+    let updatedPermissions = [...this.state.permissions]
+    // determine whether to add or remove target permission
+    if (checkbox.checked) updatedPermissions.push(checkbox.value)
+    else if (!checkbox.checked)
+      updatedPermissions = updatedPermissions.filter(
+        permission => permission !== checkbox.value
+      )
+    this.setState({ permissions: updatedPermissions })
+  }
   render() {
     const user = this.props.user
     return (
@@ -55,7 +79,13 @@ class User extends Component {
         {possiblePermissions.map(permission => (
           <td key={permission}>
             <label htmlFor={`${user.id}-permission-${permission}`}>
-              <input type="checkbox" />
+              <input
+                id={`${user.id}-permission-${permission}`}
+                type="checkbox"
+                checked={this.state.permissions.includes(permission)}
+                value={permission}
+                onChange={this.handleChange}
+              />
             </label>
           </td>
         ))}
