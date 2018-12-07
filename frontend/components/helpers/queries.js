@@ -51,6 +51,12 @@ export const ALL_USERS_QUERY = gql`
   }
 `
 
+export const LOCAL_STATE_QUERY = gql`
+  query {
+    cartOpen @client
+  }
+`
+
 /*
  * MUTATIONS
  */
@@ -178,5 +184,11 @@ export const UPDATE_PERMISSIONS_MUTATION = gql`
       name
       email
     }
+  }
+`
+
+export const TOGGLE_CART_MUTATION = gql`
+  mutation {
+    toggleCart @client
   }
 `
