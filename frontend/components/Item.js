@@ -6,6 +6,7 @@ import Title from './styles/Title'
 import ItemStyles from './styles/ItemStyles'
 import PriceTag from './styles/PriceTag'
 import DeleteItem from './DeleteItem'
+import AddToCart from './AddToCart'
 
 import formatMoney from '../lib/formatMoney'
 
@@ -41,8 +42,8 @@ export default class Item extends Component {
           >
             <a>Edit ✏️</a>
           </Link>
-          <button>Add to cart</button>
-          <DeleteItem id={item.id} >Delete</DeleteItem>
+          <AddToCart id={item.id} />
+          <DeleteItem id={item.id}>Delete</DeleteItem>
         </div>
       </ItemStyles>
     )
